@@ -135,7 +135,6 @@
                     <div class="addListOptions">
                         <a class="lpAdd" @click="newList"><i class="lpSprite lpSpriteAdd" />Add new list</a>
                         <a class="lpAdd" @click="importCSV"><i class="lpSprite lpSpriteUpload" />Import CSV</a>
-                        <a class="lpCopy" @click="showCopyList"><i class="lpSprite lpSpriteCopy" />Copy a list</a>
                     </div>
                 </template>
             </PopoverHover>
@@ -180,9 +179,6 @@ export default {
         },
         newList() {
             this.$store.commit('newList');
-        },
-        showCopyList() {
-            bus.$emit('copyList');
         },
         copyList(list) {
             this.$store.commit('copyList', list.id);

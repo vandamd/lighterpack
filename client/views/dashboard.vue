@@ -103,7 +103,6 @@
 
         <globalAlerts />
         <speedbump />
-        <copyList />
         <importCSV />
         <itemImage />
         <itemViewImage />
@@ -130,7 +129,6 @@ import itemImage from '../components/item-image.vue';
 import itemViewImage from '../components/item-view-image.vue';
 import itemLink from '../components/item-link.vue';
 import importCSV from '../components/import-csv.vue';
-import copyList from '../components/copy-list.vue';
 import speedbump from '../components/speedbump.vue';
 
 export default {
@@ -146,7 +144,6 @@ export default {
         help,
         list,
         itemLink,
-        copyList,
         importCSV,
         itemImage,
         itemViewImage,
