@@ -1,6 +1,5 @@
 {
     "environment"   : "development",
-    "port": 3000,
-    "devServerPort" : 8080,
+    "port": 8080,
     "bindings"      : [""]
 }

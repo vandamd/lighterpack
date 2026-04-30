@@ -104,7 +104,7 @@
                 <a v-if="item.url" :href="item.url" target="_blank" class="lpName lpHref">{{ item.name }}</a>
                 <span v-if="!item.url" class="lpName">{{ item.name }}</span>
                 <span class="lpWeight">
-                    {{ item.weight | displayWeight(item.authorUnit) }}
+                    {{ displayWeight(item.weight, item.authorUnit) }}
                     {{ item.authorUnit }}
                 </span>
                 <span class="lpDescription">
@@ -118,9 +118,8 @@
 </template>
 
 <script>
+import dragula from 'dragula';
 import utilsMixin from '../mixins/utils-mixin.js';
-
-const dragula = require('dragula');
 
 export default {
     name: 'LibraryItem',

@@ -36,24 +36,28 @@
 <template>
     <span v-if="isSignedIn" id="settings" class="headerItem hasPopover">
         <PopoverHover>
-            <span slot="target"><i class="lpSprite lpSettings" /> Settings</span>
-            <div slot="content">
-                <ul id="lpOptionalFields">
-                    <li v-for="optionalField in optionalFieldsLookup" :key="optionalField.name" class="lpOptionalField">
+            <template #target>
+                <span><i class="lpSprite lpSettings" /> Settings</span>
+            </template>
+            <template #content>
+                <div>
+                    <ul id="lpOptionalFields">
+                        <li v-for="optionalField in optionalFieldsLookup" :key="optionalField.name" class="lpOptionalField">
+                            <label>
+                                <input v-model="optionalField.value" type="checkbox" @change="toggleOptionalField($event, optionalField.name)">
+                                {{ optionalField.displayName }}
+                            </label>
+                        </li>
+                    </ul>
+                    <div v-if="library.optionalFields['price']" id="lpPriceSettings">
+                        <hr>
                         <label>
-                            <input v-model="optionalField.value" type="checkbox" @change="toggleOptionalField($event, optionalField.name)">
-                            {{ optionalField.displayName }}
+                            Currency:
+                            <input id="currencySymbol" type="text" maxlength="4" :value="library.currencySymbol" @input="updateCurrencySymbol($event)">
                         </label>
-                    </li>
-                </ul>
-                <div v-if="library.optionalFields['price']" id="lpPriceSettings">
-                    <hr>
-                    <label>
-                        Currency:
-                        <input id="currencySymbol" type="text" maxlength="4" :value="library.currencySymbol" @input="updateCurrencySymbol($event)">
-                    </label>
+                    </div>
                 </div>
-            </div>
+            </template>
         </PopoverHover>
     </span>
 </template>

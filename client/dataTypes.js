@@ -1,7 +1,7 @@
-const assignIn = require('lodash/assignIn');
+import assignIn from 'lodash/assignIn';
 
-const colorUtils = require('./utils/color.js');
-const weightUtils = require('./utils/weight.js');
+import colorUtils from './utils/color.js';
+import weightUtils from './utils/weight.js';
 
 const defaultOptionalFields = {
     images: false,
@@ -761,7 +761,14 @@ Object.size = function (obj) {
     return size;
 };
 
-module.exports = {
+export {
+    Library,
+    List,
+    Category,
+    Item,
+};
+
+export default {
     Library,
     List,
     Category,

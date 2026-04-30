@@ -1,6 +1,6 @@
-const colorUtils = require('./utils/color.js');
+import colorUtils from './utils/color.js';
 
-module.exports = function (args) {
+export default function pies(args) {
     let container;
     let context;
     let srcData;
@@ -424,4 +424,4 @@ module.exports = function (args) {
 
     init();
     return { update, open, close };
-};
+}

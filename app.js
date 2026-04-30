@@ -1,8 +1,7 @@
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
 const compression = require('compression');
 const config = require('config');
 const express = require('express');
+const http = require('http');
 const morgan = require('morgan');
 const uuid = require('uuid');
 
@@ -10,6 +9,7 @@ const { logger } = require('./server/log.js');
 const { createLiveApiProxy } = require('./server/live-api-proxy.js');
 
 const liveApiTarget = process.env.LIGHTERPACK_API_BASE_URL || 'https://lighterpack.com';
+const isProduction = config.get('environment') === 'production';
 
 morgan.token('username', function getUsername(req) {
     return req.lighterpackusername;
@@ -21,6 +21,7 @@ morgan.token('requestid', function getRequestId(req) {
 });
 
 const app = express();
+const httpServer = http.createServer(app);
 app.enable('trust proxy');
 
 app.use(function addRequestId(req, res, next) {
@@ -50,53 +51,38 @@ const oneDay = 86400000;
 app.use(compression());
 app.use(express.static(`${__dirname}/public/`, { maxAge: oneDay }));
 
-logger.info(`Proxying LighterPack API requests to ${liveApiTarget}`);
-app.use(createLiveApiProxy({ target: liveApiTarget }));
-
-const views = require('./server/views.js');
-app.use('/', views);
-
-logger.info('Starting up Lighterpack...');
-
-let webpackConfig;
-if (config.get('environment') === 'production') {
-    webpackConfig = require('./webpack.config');
-} else {
-    webpackConfig = require('./webpack.development.config');
-}
-
-config.get('bindings').forEach((bind) => {
-    app.listen(config.get('port'), bind);
-    logger.info(`Listening on [${bind}]:${config.get('port')}`);
-});
-
-if (config.get('environment') !== 'production') {
-    new WebpackDevServer(webpack(webpackConfig), {
-        historyApiFallback: true,
-        disableHostCheck: true,
-        publicPath: webpackConfig.output.publicPath,
-        hot: true,
-        proxy: {
-            '*': {
-                target: `http://localhost:${config.get('port')}`,
-                secure: false,
-                changeOrigin: true,
+async function start() {
+    if (!isProduction) {
+        const { createServer: createViteServer } = await import('vite');
+        const vite = await createViteServer({
+            server: {
+                middlewareMode: true,
+                hmr: {
+                    server: httpServer,
+                },
             },
-        },
-        stats: {
-            cached: false,
-            cachedAssets: false,
-            colors: { level: 2 },
-        },
-        watchOptions: {
-            aggregateTimeout: 300,
-            poll: 1000,
-        },
-    }).listen(config.get('devServerPort'), (err, result) => {
-        if (err) {
-            return logger.info(err);
-        }
+            appType: 'custom',
+        });
 
-        logger.info(`Webpack dev server listening on port ${config.get('devServerPort')}`);
+        app.use(vite.middlewares);
+        app.locals.vite = vite;
+    }
+
+    logger.info(`Proxying LighterPack API requests to ${liveApiTarget}`);
+    app.use(createLiveApiProxy({ target: liveApiTarget }));
+
+    const views = require('./server/views.js');
+    app.use('/', views);
+
+    logger.info('Starting up Lighterpack...');
+
+    config.get('bindings').forEach((bind) => {
+        httpServer.listen(config.get('port'), bind || undefined);
+        logger.info(`Listening on [${bind}]:${config.get('port')}`);
     });
 }
+
+start().catch((error) => {
+    logger.error(error);
+    process.exitCode = 1;
+});

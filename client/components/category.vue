@@ -29,10 +29,10 @@
                     <a class="lpAdd lpAddItem" @click="newItem"><i class="lpSprite lpSpriteAdd" />Add new item</a>
                 </span>
                 <span v-if="library.optionalFields['price']" class="lpPriceCell lpNumber lpSubtotal">
-                    {{ category.subtotalPrice | displayPrice(library.currencySymbol) }}
+                    {{ displayPrice(category.subtotalPrice, library.currencySymbol) }}
                 </span>
                 <span class="lpWeightCell lpNumber lpSubtotal">
-                    <span class="lpDisplaySubtotal">{{ category.subtotalWeight | displayWeight(library.totalUnit) }}</span>
+                    <span class="lpDisplaySubtotal">{{ displayWeight(category.subtotalWeight, library.totalUnit) }}</span>
                     <span class="lpSubtotalUnit">{{ library.totalUnit }}</span>
                 </span>
                 <span class="lpQtyCell lpSubtotal">
@@ -45,9 +45,8 @@
 </template>
 
 <script>
+import utilsMixin from '../mixins/utils-mixin.js';
 import item from './item.vue';
-
-const utilsMixin = require('../mixins/utils-mixin.js');
 
 export default {
     name: 'Category',

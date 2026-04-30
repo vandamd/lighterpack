@@ -16,31 +16,47 @@ const vueRoutes = [
     { path: '/moderation' },
 ];
 
-let index = fs.readFileSync(path.join(__dirname, '../_index.html'), 'utf8');
-let appScriptsHtml = '';
-let appStylesHtml = '';
+function renderProductionAssets() {
+    const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/dist/.vite/manifest.json'), 'utf8'));
+    const entry = manifest['client/lighterpack.ts'];
+    const styles = (entry.css || [])
+        .map(file => `<link rel='stylesheet' href='/${file}' />`)
+        .join('');
+    const scripts = `<script type='module' src='/${entry.file}'></script>`;
 
-if (config.get('environment') === 'production') {
-    const assetData = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/dist/assets.json'), 'utf8'));
-    const appAssetFiles = assetData.files.app;
-
-    appAssetFiles.forEach((assetName) => {
-        if (assetName.substr(assetName.length - 3) === '.js') {
-            appScriptsHtml += `<script src='/dist/${assetName}'></script>`;
-        } else if (assetName.substr(assetName.length - 4) === '.css') {
-            appStylesHtml += `<link rel='stylesheet' href='/dist/${assetName}' />`;
-        }
-    });
-} else {
-    appScriptsHtml = '<script src=\'/dist/app.js\'></script>';
+    return { scripts, styles };
 }
 
-index = index.replace('{{styles}}', appStylesHtml);
-index = index.replace('{{scripts}}', appScriptsHtml);
+function renderDevelopmentAssets() {
+    return {
+        styles: '',
+        scripts: '<script type="module" src="/client/lighterpack.ts"></script>',
+    };
+}
+
+async function renderIndex(req) {
+    let index = fs.readFileSync(path.join(__dirname, '../_index.html'), 'utf8');
+    const assets = config.get('environment') === 'production'
+        ? renderProductionAssets()
+        : renderDevelopmentAssets();
+
+    index = index.replace('{{styles}}', assets.styles);
+    index = index.replace('{{scripts}}', assets.scripts);
+
+    if (req.app.locals.vite) {
+        return req.app.locals.vite.transformIndexHtml(req.originalUrl, index);
+    }
+
+    return index;
+}
 
 vueRoutes.forEach((route) => {
-    router.get(route.path, (req, res) => {
-        res.send(index);
+    router.get(route.path, async (req, res, next) => {
+        try {
+            res.send(await renderIndex(req));
+        } catch (error) {
+            next(error);
+        }
     });
 });
 

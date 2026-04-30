@@ -84,10 +84,9 @@
 </template>
 
 <script>
+import dragula from 'dragula';
 import category from './category.vue';
 import listSummary from './list-summary.vue';
-
-const dragula = require('dragula');
 
 export default {
     name: 'List',

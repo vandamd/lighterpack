@@ -89,17 +89,14 @@
 </template>
 
 <script>
+import weightUtils from '../utils/weight.js';
 import unitSelect from './unit-select.vue';
-
-const utilsMixin = require('../mixins/utils-mixin.js');
-const weightUtils = require('../utils/weight.js');
 
 export default {
     name: 'Item',
     components: {
         unitSelect,
     },
-    mixins: [utilsMixin],
     props: ['category', 'itemContainer'],
     data() {
         return {

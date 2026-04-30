@@ -22,12 +22,9 @@
 </template>
 
 <script>
+import { Library } from '../dataTypes.js';
 import errors from './errors.vue';
 import spinner from './spinner.vue';
-
-const dataTypes = require('../dataTypes.js');
-
-const Library = dataTypes.Library;
 
 export default {
     name: 'RegisterForm',
