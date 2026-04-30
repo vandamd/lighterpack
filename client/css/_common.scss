@@ -432,32 +432,39 @@
 }
 
 .lpRow {
+    background-image: radial-gradient(circle, var(--lp-row-separator, #aaa) 0.6px, transparent 0.7px);
+    background-position: left top;
+    background-repeat: repeat-x;
+    background-size: 2px 1px;
     display: table-row;
 
-    &:first-child > .lpCell {
-        border-top: none;
+    &:first-child {
+        background-image: none;
     }
 
     &.lpHeader {
+        background-image: none;
+
         .lpCell {
             border-bottom: 1px solid #aaa;
             vertical-align: bottom;
         }
 
-        + .lpRow .lpCell {
-            border-top: none;
+        + .lpRow {
+            background-image: none;
         }
     }
 }
 
 .lpFooter {
+    background-image: none;
+
     .lpCell {
         border-top: 1px solid #aaa;
     }
 }
 
 .lpCell {
-    border-top: 1px dotted #aaa;
     display: table-cell;
     padding: 1px 8px;
 
@@ -495,6 +502,8 @@
 }
 
 .lp[data-theme="dark"] {
+    --lp-row-separator: #555;
+
     &,
     body {
         background: #181818;
