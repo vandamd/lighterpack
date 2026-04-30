@@ -13,6 +13,8 @@ export default function pies(args) {
     let hovered = null;
     let hoverCallback = null;
     let clickCallback = null;
+    let eventsAttached = false;
+    let animationFrame = null;
     const backgroundColor = 'rgb(245,245,245)';
     const firstRing = { inner: 25, outer: 70 };
     const secondRing = { inner: 80, outer: 120 };
@@ -28,6 +30,7 @@ export default function pies(args) {
         container = args.container;
         container.style.position = 'relative';
         context = container.getContext('2d');
+        setupCanvasScale();
         if (args.data) {
             srcData = args.data;
             data = preprocess(srcData);
@@ -35,7 +38,7 @@ export default function pies(args) {
             data = args.processedData;
         }
 
-        bounds = { x: context.canvas.width, y: context.canvas.height };
+        bounds = { x: context.canvas.clientWidth, y: context.canvas.clientHeight };
         center = { x: bounds.x / 2, y: bounds.y / 2 };
 
         if (center.x < center.y) radius = center.x;
@@ -50,8 +53,24 @@ export default function pies(args) {
         document.getElementsByTagName('body')[0].appendChild(tooltip);
     }
 
+    function setupCanvasScale() {
+        const pixelRatio = window.devicePixelRatio || 1;
+        const width = container.width;
+        const height = container.height;
+
+        container.style.width = `${width}px`;
+        container.style.height = `${height}px`;
+        container.width = Math.round(width * pixelRatio);
+        container.height = Math.round(height * pixelRatio);
+        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    }
+
     function update(args) {
         const oldVisibleRings = getVisibleRings(data);
+        if (animationFrame) {
+            window.cancelAnimationFrame(animationFrame);
+            animationFrame = null;
+        }
 
         if (args.data) {
             data = preprocess(args.data);
@@ -221,13 +240,16 @@ export default function pies(args) {
             ring.radiusFunction = easeThenDelay;
         }
 
-        setTimeout(animateStep, frameRate);
+        animationFrame = window.requestAnimationFrame(animateStep);
     }
 
     function animateStep() {
         const rings = getVisibleRings(data);
         const d = new Date();
-        if (d.getTime() - frameRate > rings[0].finishTime) return;
+        if (d.getTime() - frameRate > rings[0].finishTime) {
+            animationFrame = null;
+            return;
+        }
 
         context.clearRect(0, 0, bounds.x, bounds.y);
 
@@ -241,12 +263,14 @@ export default function pies(args) {
             ring.angleMultiplier = ring.startAngleMultiplier + (ring.deltaAngleMultiplier * ring.angleMultiplierFunction(percentAnimated));
             render(ring);
         }
-        setTimeout(animateStep, frameRate);
+        animationFrame = window.requestAnimationFrame(animateStep);
     }
 
     function attachEvents() {
+        if (eventsAttached) return;
         container.addEventListener('mousemove', hoverHandle);
         container.addEventListener('click', clickHandle);
+        eventsAttached = true;
     }
 
     function hoverHandle(evt) {

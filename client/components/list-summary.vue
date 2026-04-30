@@ -2,7 +2,7 @@
 
 .lpLegend {
     &:hover {
-        border-color: #666;
+        box-shadow: 0 0 0 1px #666;
         cursor: pointer;
     }
 }

@@ -5,6 +5,7 @@
     height: 12px;
     justify-content: center;
     position: relative;
+    transform: translateY(-0.5px);
     width: 12px;
 }
 
