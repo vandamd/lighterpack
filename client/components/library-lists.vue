@@ -30,11 +30,6 @@
 
     &.lpActive {
         color: $yellow1;
-
-        .lpRemove {
-            pointer-events: none;
-            visibility: hidden;
-        }
     }
 
     &.gu-mirror {
@@ -66,9 +61,48 @@
         }
     }
 
+    .lpCopyList {
+        cursor: pointer;
+        flex: 0 0 14px;
+        margin-right: 8px;
+        visibility: hidden;
+
+        .lpSpriteCopy {
+            background: #3A3A3A;
+            mask: url(/images/sprite2x.png?v=2) 0 -50px / 400px no-repeat;
+            -webkit-mask: url(/images/sprite2x.png?v=2) 0 -50px / 400px no-repeat;
+        }
+
+        &:hover {
+            .lpSpriteCopy {
+                background: $green1;
+            }
+        }
+    }
+
+    &:hover .lpCopyList {
+        visibility: visible;
+    }
+
     .lpRemove {
-        flex: 0 0 8px;
+        align-items: center;
+        display: flex;
+        flex: 0 0 20px;
+        height: 20px;
+        justify-content: center;
         margin-bottom: 0;
+        padding: 0;
+
+        &:hover {
+            box-shadow: none;
+        }
+
+        .lpSpriteRemove {
+            height: 9px;
+            position: static;
+            top: 0;
+            transform: translateY(0.5px);
+        }
     }
 }
 
@@ -101,7 +135,7 @@
                     <div class="addListOptions">
                         <a class="lpAdd" @click="newList"><i class="lpSprite lpSpriteAdd" />Add new list</a>
                         <a class="lpAdd" @click="importCSV"><i class="lpSprite lpSpriteUpload" />Import CSV</a>
-                        <a class="lpCopy" @click="copyList"><i class="lpSprite lpSpriteCopy" />Copy a list</a>
+                        <a class="lpCopy" @click="showCopyList"><i class="lpSprite lpSpriteCopy" />Copy a list</a>
                     </div>
                 </template>
             </PopoverHover>
@@ -112,6 +146,7 @@
                 <span class="lpLibraryListSwitch lpListName" @click="setDefaultList(list)">
                     {{ listName(list) }}
                 </span>
+                <a class="lpCopyList" title="Copy this list" @click="copyList(list)"><i class="lpSprite lpSpriteCopy" /></a>
                 <a class="lpRemove" title="Remove this list" @click="removeList(list)"><i class="lpSprite lpSpriteRemove" /></a>
             </li>
         </ul>
@@ -146,8 +181,11 @@ export default {
         newList() {
             this.$store.commit('newList');
         },
-        copyList() {
+        showCopyList() {
             bus.$emit('copyList');
+        },
+        copyList(list) {
+            this.$store.commit('copyList', list.id);
         },
         importCSV() {
             bus.$emit('importCSV');
