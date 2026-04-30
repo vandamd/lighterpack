@@ -10,6 +10,7 @@
 }
 
 .lpLibraryList {
+    align-items: center;
     border-top: 1px dotted #999;
     display: flex;
     list-style: none;
@@ -29,10 +30,10 @@
 
     &.lpActive {
         color: $yellow1;
-        font-weight: bold;
 
         .lpRemove {
-            display: none;
+            pointer-events: none;
+            visibility: hidden;
         }
     }
 
@@ -46,6 +47,7 @@
         flex: 0 0 12px;
         height: 18px;
         margin-right: 5px;
+        margin-top: 0;
     }
 
     &:hover .lpHandle {
@@ -75,8 +77,8 @@
     justify-content: space-between;
 }
 
-#addListFlyout {
-    .lpContent a {
+.addListOptions {
+    a {
         display: block;
         margin-bottom: 5px;
 
@@ -96,7 +98,7 @@
                     <span><a class="lpAdd" @click="newList"><i class="lpSprite lpSpriteAdd" />Add new list</a></span>
                 </template>
                 <template #content>
-                    <div>
+                    <div class="addListOptions">
                         <a class="lpAdd" @click="newList"><i class="lpSprite lpSpriteAdd" />Add new list</a>
                         <a class="lpAdd" @click="importCSV"><i class="lpSprite lpSpriteUpload" />Import CSV</a>
                         <a class="lpCopy" @click="copyList"><i class="lpSprite lpSpriteCopy" />Copy a list</a>
