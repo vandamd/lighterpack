@@ -46,6 +46,19 @@
     }
 }
 
+.lp[data-theme="dark"] {
+    #getStarted {
+        background: #242424;
+        color: #e6e6e6;
+    }
+
+    #getStarted .lpWarning {
+        background: #3f3614;
+        border-color: #8b7415;
+        color: #f3e3a1;
+    }
+}
+
 </style>
 
 <template>

@@ -125,7 +125,7 @@
     min-height: 100%;
     position: relative;
     text-align: left;
-    transition: all $transitionDurationSlow;
+    transition: max-width $transitionDurationSlow;
 
     &.lpHasSidebar {
         max-width: 1280px;
@@ -247,6 +247,22 @@
                 color: #fff;
             }
         }
+    }
+}
+
+.themeModeButton {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    padding: 0;
+
+    &:hover,
+    &:focus {
+        color: $blue1;
+        outline: none;
     }
 }
 
@@ -476,6 +492,149 @@
     border: 1px solid $darkYellow;
     border-radius: 5px;
     padding: 10px;
+}
+
+.lp[data-theme="dark"] {
+    &,
+    body {
+        background: #181818;
+        color: #e6e6e6;
+        color-scheme: dark;
+    }
+
+    #main,
+    .lpList {
+        background: #181818;
+    }
+
+    hr,
+    .lpRow.lpHeader .lpCell,
+    .lpFooter .lpCell {
+        border-color: #666;
+    }
+
+    .lpCell,
+    .lpItem,
+    .lpItemsHeader,
+    .lpItemsFooter {
+        border-color: #555;
+    }
+
+    .hover {
+        background: #4a421a;
+    }
+
+    .lpHref,
+    .lpAdd,
+    .lpCopy {
+        color: #7cc5ff;
+    }
+
+    input,
+    select,
+    textarea,
+    .lpFields input[type=text],
+    .lpFields input[type=email],
+    .lpFields input[type=password],
+    .lpFields textarea {
+        background: #242424;
+        border-color: #555;
+        color: #e6e6e6;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: #999;
+    }
+
+    .lpSilent {
+        background: transparent;
+        border-color: transparent;
+
+        &:hover,
+        &:focus {
+            background-color: #242424;
+            border-color: #555;
+        }
+    }
+
+    .lpItem:hover,
+    .lpItem.ui-sortable-helper,
+    .lpCategory.gu-mirror,
+    .lpItemsHeader.gu-mirror,
+    .lpItemsFooter.gu-mirror {
+        background: #242424;
+    }
+
+    .lpPopover {
+        .lpContent,
+        .lpContent::before,
+        .lpContent::after {
+            background: #242424;
+            color: #e6e6e6;
+        }
+
+        .lpContent {
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.65);
+        }
+
+        hr {
+            border-color: #555;
+        }
+    }
+
+    .lpModal,
+    .lpDialog {
+        background: #202020;
+        color: #e6e6e6;
+    }
+
+    .lpUnitSelect {
+        &:hover,
+        &.lpHover,
+        &.lpOpen {
+            background: #242424;
+            border-color: #555;
+        }
+
+        .lpUnitDropdown {
+            background: #242424;
+            border-color: #555;
+
+            li:hover {
+                background: #1b77d3;
+                color: #fff;
+            }
+        }
+    }
+
+    .lpButton {
+        color: #fff;
+    }
+
+    .tooltip {
+        background: #222;
+        border-color: #777;
+    }
+
+    #lpWelcomeFooter {
+        background: rgba(24, 24, 24, 0.78);
+        color: #cfcfcf;
+    }
+
+    .lpSprite {
+        filter: brightness(0) invert(1);
+    }
+
+    .lpWorn.lpActive,
+    .lpConsumable.lpActive,
+    .lpLink.lpActive,
+    .lpStar1,
+    .lpStar2,
+    .lpStar3,
+    .lpRemove:hover .lpSpriteRemove {
+        filter: none;
+    }
 }
 
 #lpImageDialog {

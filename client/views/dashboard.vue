@@ -75,6 +75,7 @@
                     <a id="hamburger" class="lpTransition" @click="toggleSidebar"><i class="lpSprite lpHamburger" /></a>
                 </span>
                 <input id="lpListName" :value="list.name" type="text" class="lpListName lpSilent headerItem" value="New List" placeholder="List Name" autocomplete="off" name="lastpass-disable-search" @input="updateListName">
+                <themeMode />
                 <share />
                 <listSettings />
                 <accountDropdown v-if="isSignedIn" />
@@ -90,13 +91,12 @@
 
             <div id="lpFooter">
                 <div class="lpSiteBy">
-                    Site by <a class="lpHref" href="https://www.galenmaly.com/" target="_blank" rel="noopener noreferrer">Galen Maly</a>
-                    and <a class="lpHref" href="https://github.com/galenmaly/lighterpack/graphs/contributors" target="_blank" rel="noopener noreferrer">friends</a>.
+                    Fork by <a class="lpHref" href="https://vandamdinh.com" target="_blank" rel="noopener noreferrer">Vandam Dinh</a>.
                 </div>
                 <div class="lpContact">
-                    <a class="lpHref" href="https://github.com/galenmaly/lighterpack" target="_blank" rel="noopener noreferrer">Copyleft</a> LighterPack 2019
-                    -
-                    <a class="lpHref" href="mailto:info@lighterpack.com">Contact</a>
+                    Thank you to <a class="lpHref" href="https://www.galenmaly.com/" target="_blank" rel="noopener noreferrer">Galen Maly</a>
+                    and <a class="lpHref" href="https://github.com/galenmaly/lighterpack/graphs/contributors" target="_blank" rel="noopener noreferrer">friends</a>
+                    for <a class="lpHref" href="https://lighterpack.com" target="_blank" rel="noopener noreferrer">LighterPack</a>.
                 </div>
             </div>
         </div>
@@ -117,6 +117,7 @@
 import globalAlerts from '../components/global-alerts.vue';
 import sidebar from '../components/sidebar.vue';
 import share from '../components/share.vue';
+import themeMode from '../components/theme-mode.vue';
 import listSettings from '../components/list-settings.vue';
 import accountDropdown from '../components/account-dropdown.vue';
 import forgotPassword from './forgot-password.vue';
@@ -136,6 +137,7 @@ export default {
     components: {
         sidebar,
         share,
+        themeMode,
         listSettings,
         accountDropdown,
         forgotPassword,

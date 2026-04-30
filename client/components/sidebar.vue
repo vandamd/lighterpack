@@ -30,10 +30,6 @@ $sidebarPadding: 20px;
         margin: 0 -20px 20px 0;
         padding: 20px 0 20px;
         position: relative;
-
-        span {
-            color: #aaa;
-        }
     }
 
     section {
@@ -75,7 +71,7 @@ $sidebarPadding: 20px;
 <template>
     <div id="sidebar">
         <div id="scrollable">
-            <h1>LighterPack <span>(beta)</span></h1>
+            <h1>LighterPack</h1>
 
             <libraryLists />
         </div>

@@ -5,7 +5,7 @@
     min-height: 100%;
     padding: 0 20px;
     position: relative;
-    transition: all $transitionDurationSlow;
+    transition: margin-left $transitionDurationSlow;
     z-index: $aboveSidebar;
 
     .lpHasSidebar & {

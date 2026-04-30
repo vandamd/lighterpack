@@ -2,6 +2,7 @@
 <html class="lp">
     <head>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css' />
+        <script type="text/javascript" src="/js/theme.js"></script>
         {{{styles}}}
         <link rel="shortcut icon" href="/favicon.png" />
         <style>.lpModalOverlay, #lpImageDialog { display: none;}</style>
@@ -10,7 +11,12 @@
     <body>
         <div id="main" class="lpShare">
             <div class="lpList {{#optionalFields.images}}lpShowImages{{/optionalFields.images}} {{#optionalFields.worn}}lpShowWorn{{/optionalFields.worn}} {{#optionalFields.consumable}}lpShowConsumable{{/optionalFields.consumable}} {{#optionalFields.price}}lpShowPrices{{/optionalFields.price}}">
-                <h1 class="lpListName">{{listName}}</h1>
+                <div class="lpShareHeader">
+                    <h1 id="lpListName" class="lpListName headerItem">{{listName}}</h1>
+                    <span class="headerItem lpShareThemeMode">
+                        <button class="themeModeButton" type="button">Auto Theme</button>
+                    </span>
+                </div>
                 <div class="lpListSummary">
                     <div class="lpChartContainer">
                         <canvas class="lpChart" height="260" width="260"></canvas>
@@ -29,6 +35,17 @@
                 {{/renderedDescription}}
 
                 <ul class="lpCategories">{{{renderedCategories}}}</ul>
+
+                <div id="lpFooter">
+                    <div class="lpSiteBy">
+                        Fork by <a class="lpHref" href="https://vandamdinh.com" target="_blank" rel="noopener noreferrer">Vandam Dinh</a>.
+                    </div>
+                    <div class="lpContact">
+                        Thank you to <a class="lpHref" href="https://www.galenmaly.com/" target="_blank" rel="noopener noreferrer">Galen Maly</a>
+                        and <a class="lpHref" href="https://github.com/galenmaly/lighterpack/graphs/contributors" target="_blank" rel="noopener noreferrer">friends</a>
+                        for <a class="lpHref" href="https://lighterpack.com" target="_blank" rel="noopener noreferrer">LighterPack</a>.
+                    </div>
+                </div>
             </div>
         </div>
         <div class="lpDialog" id="lpImageDialog"></div>

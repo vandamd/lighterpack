@@ -15,6 +15,14 @@ declare global {
         };
         router: Router;
         LighterPack: unknown;
+        lighterpackTheme: {
+            modes: string[];
+            getThemeMode(): string;
+            setThemeMode(mode: string): string;
+            nextThemeMode(mode: string): string;
+            labelForMode(mode: string): string;
+            applyThemeMode(mode: string): void;
+        };
     }
 
     const bus: Window['bus'];

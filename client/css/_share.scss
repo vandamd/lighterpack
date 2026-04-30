@@ -3,6 +3,34 @@
 }
 
 .lpShare {
+    .lpShareHeader {
+        align-items: baseline;
+        display: flex;
+        height: 60px;
+        justify-content: stretch;
+        margin: 10px -20px 20px;
+        position: relative;
+
+        #lpListName {
+            flex: 1 0 auto;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            padding: 12px 15px;
+        }
+
+        .headerItem {
+            flex: 0 0 auto;
+            height: 100%;
+            padding: 17px 16px;
+            position: relative;
+        }
+    }
+
+    .lpShareThemeMode {
+        flex: 0 0 auto;
+    }
+
     .lpCategoryName {
         font-size: 18px;
         margin: 0;
@@ -24,6 +52,12 @@
 
     #lpListDescription {
         margin: 30px 0;
+    }
+}
+
+.lp[data-theme="dark"] {
+    .lpShare .lpItem:hover {
+        background: #242424;
     }
 }
 

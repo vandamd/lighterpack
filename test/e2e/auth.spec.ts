@@ -21,7 +21,8 @@ test.describe('User Authentication Tests', () => {
     const password = 'testtest';
 
     await registerUser(page, username, password, email);
-    await expect(page.getByText(`Signed in as ${username}`)).toBeVisible();
+    await expect(page.locator('#accountDropdown .username')).toHaveText(username);
+    await expect(page.getByText('Signed in as')).toBeHidden();
     await expect(page.getByText('Welcome to LighterPack!')).toBeVisible();
   });
 
@@ -31,7 +32,8 @@ test.describe('User Authentication Tests', () => {
     const { username, password } = await getSharedUser();
 
     await loginUser(page, username, password);
-    await expect(page.getByText(`Signed in as ${username}`)).toBeVisible();
+    await expect(page.locator('#accountDropdown .username')).toHaveText(username);
+    await expect(page.getByText('Signed in as')).toBeHidden();
     await expect(page.getByText('Welcome to LighterPack!')).toBeVisible();
     await expect(page).toHaveScreenshot();
   });
@@ -56,7 +58,7 @@ test.describe('User Authentication Tests', () => {
     const newPassword = 'testtest2';
 
     await registerUser(page, username, password, email);
-    await page.getByText('Signed in as').hover();
+    await page.locator('#accountDropdown .lpTarget').hover();
     await page.getByText('Account Settings').click();
 
     await page.getByPlaceholder('New Password', { exact: true }).fill(newPassword);
@@ -89,7 +91,7 @@ test.describe('User Authentication Tests', () => {
     const password = 'testtest';
 
     await registerUser(page, username, password, email);
-    await page.getByText('Signed in as').hover();
+    await page.locator('#accountDropdown .lpTarget').hover();
     await page.getByText('Account Settings').click();
     await page.getByText('Delete Account').click();
     await page.getByText('Permanently delete account').click();

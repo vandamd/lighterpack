@@ -30,6 +30,6 @@ export async function loginUser(page, username, password) {
 }
 
 export async function logoutUser(page) { 
-    await page.getByText('Signed in as').hover();
-    await page.getByText('Sign out').click();
+    await page.locator('#accountDropdown .lpTarget').hover();
+    await page.getByText('Sign Out').click();
 }

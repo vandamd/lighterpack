@@ -5,10 +5,10 @@
 </style>
 
 <template>
-    <span class="headerItem hasPopover">
+    <span id="accountDropdown" class="headerItem hasPopover">
         <PopoverHover id="headerPopover">
             <template #target>
-                <span>Signed in as <span class="username">{{ username }}</span> <i class="lpSprite lpExpand" /></span>
+                <span><span class="username">{{ username }}</span> <i class="lpSprite lpExpand" /></span>
             </template>
             <template #content>
                 <div>

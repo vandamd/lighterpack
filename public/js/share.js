@@ -10,6 +10,8 @@ listReport = function () {
 
     function init() {
         initEventHandlers();
+        initThemeToggle();
+        initShareFooter();
         normaliseSummaryTable();
 
         if (typeof chartData !== "undefined") {
@@ -86,7 +88,7 @@ listReport = function () {
             .addClass('lpSummaryWeightHeader')
             .html('<span>Weight</span>');
 
-        $('.lpTotals .lpTotalCategory .lpCell:last-child').each(function () {
+        $('.lpTotals .lpTotalCategory .lpCell:last-child, .lpTotals .lpFooter .lpCell:last-child').each(function () {
             const $cell = $(this);
             const $subtotal = $cell.find('.lpSubtotal');
 
@@ -95,8 +97,6 @@ listReport = function () {
                 $cell.empty().append($subtotal.children());
             }
         });
-
-        $('.lpTotals .lpFooter .lpCell:last-child').addClass('lpSummaryWeight');
     }
 
     function updateSummaryWeightWidth() {
@@ -106,7 +106,59 @@ listReport = function () {
             longest = Math.max(longest, $.trim($(this).text()).length);
         });
 
-        $('.lpTotals').css('--summary-weight-width', `${longest}ch`);
+        $('.lpTotals').each(function () {
+            this.style.setProperty('--summary-weight-width', `${longest}ch`);
+        });
+    }
+
+    function initThemeToggle() {
+        const theme = window.lighterpackTheme;
+
+        if (!theme) {
+            return;
+        }
+
+        if (!$('.lpShareThemeMode').length) {
+            const $listName = $('.lpShare .lpListName').first();
+            $listName.wrap('<div class="lpShareHeader"></div>');
+            $listName.attr('id', 'lpListName');
+            $listName.addClass('headerItem');
+            $listName.after('<span class="headerItem lpShareThemeMode"><button class="themeModeButton" type="button"></button></span>');
+        }
+
+        const $button = $('.lpShareThemeMode .themeModeButton');
+        const updateButton = function () {
+            const mode = theme.getThemeMode();
+            const label = theme.labelForMode(mode);
+            $button.text(label);
+            $button.attr('title', `Theme: ${label}`);
+        };
+
+        updateButton();
+
+        $button.on('click', function () {
+            theme.setThemeMode(theme.nextThemeMode(theme.getThemeMode()));
+            updateButton();
+        });
+    }
+
+    function initShareFooter() {
+        if ($('#lpFooter').length) {
+            return;
+        }
+
+        $('.lpList').append([
+            '<div id="lpFooter">',
+            '<div class="lpSiteBy">',
+            'Fork by <a class="lpHref" href="https://vandamdinh.com" target="_blank" rel="noopener noreferrer">Vandam Dinh</a>.',
+            '</div>',
+            '<div class="lpContact">',
+            'Thank you to <a class="lpHref" href="https://www.galenmaly.com/" target="_blank" rel="noopener noreferrer">Galen Maly</a> ',
+            'and <a class="lpHref" href="https://github.com/galenmaly/lighterpack/graphs/contributors" target="_blank" rel="noopener noreferrer">friends</a> ',
+            'for <a class="lpHref" href="https://lighterpack.com" target="_blank" rel="noopener noreferrer">LighterPack</a>.',
+            '</div>',
+            '</div>',
+        ].join(''));
     }
 
     function initEventHandlers() {
