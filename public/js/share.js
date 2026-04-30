@@ -10,12 +10,15 @@ listReport = function () {
 
     function init() {
         initEventHandlers();
+        normaliseSummaryTable();
 
         if (typeof chartData !== "undefined") {
             chartData = JSON.parse(unescape(chartData));
             addParents(chartData, false);
             chart = pies({ processedData: chartData, container: $chartContainer, hoverCallback: chartHover });
         }
+
+        updateSummaryWeightWidth();
     }
 
     function WeightToMg(value, unit) {
@@ -73,6 +76,37 @@ listReport = function () {
             $(this).text(MgToWeight(parseFloat($(this).attr('mg')), unit));
             $(this).next().text(unit);
         });
+        updateSummaryWeightWidth();
+    }
+
+    function normaliseSummaryTable() {
+        $('.lpTotals .lpLegendCell > .lpLegend').wrap('<span class="lpColorPicker"></span>');
+
+        $('.lpTotals .lpHeader .lpCell:last-child')
+            .addClass('lpSummaryWeightHeader')
+            .html('<span>Weight</span>');
+
+        $('.lpTotals .lpTotalCategory .lpCell:last-child').each(function () {
+            const $cell = $(this);
+            const $subtotal = $cell.find('.lpSubtotal');
+
+            $cell.addClass('lpSummaryWeight');
+            if ($subtotal.length) {
+                $cell.empty().append($subtotal.children());
+            }
+        });
+
+        $('.lpTotals .lpFooter .lpCell:last-child').addClass('lpSummaryWeight');
+    }
+
+    function updateSummaryWeightWidth() {
+        let longest = 0;
+
+        $('.lpTotals .lpDisplaySubtotal, .lpTotals .lpTotalValue').each(function () {
+            longest = Math.max(longest, $.trim($(this).text()).length);
+        });
+
+        $('.lpTotals').css('--summary-weight-width', `${longest}ch`);
     }
 
     function initEventHandlers() {

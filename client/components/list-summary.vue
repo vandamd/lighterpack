@@ -7,66 +7,6 @@
     }
 }
 
-.lpTotals {
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum";
-
-    .lpSummaryWeight,
-    .lpSummaryWeightHeader {
-        padding-left: 16px;
-    }
-
-    .lpSummaryWeight {
-        align-items: center;
-        display: grid;
-        grid-template-columns: var(--summary-weight-width) 66px;
-        justify-content: end;
-        text-align: left;
-    }
-
-    .lpSummaryWeightHeader {
-        display: grid;
-        grid-template-columns: var(--summary-weight-width) 66px;
-        justify-content: end;
-
-        span {
-            text-align: left;
-        }
-    }
-
-    .lpDisplaySubtotal,
-    .lpTotalValue {
-        text-align: right;
-    }
-
-    .lpTotalUnit {
-        display: block;
-        padding-left: 6px;
-        padding-right: 0;
-    }
-
-    .lpSubtotalUnit,
-    .lpTotalUnit {
-        text-align: left;
-
-        .lpUnitSelect {
-            border: 0;
-            display: grid;
-            grid-template-columns: max-content 14px;
-            padding: 0;
-            white-space: nowrap;
-
-            &:hover,
-            &.lpHover {
-                border: 0;
-            }
-
-            .lpDisplay {
-                width: auto;
-            }
-        }
-    }
-}
 </style>
 
 <template>

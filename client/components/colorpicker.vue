@@ -1,14 +1,4 @@
 <style lang="scss">
-.lpColorPicker {
-    align-items: center;
-    display: flex;
-    height: 12px;
-    justify-content: center;
-    position: relative;
-    transform: translateY(-0.5px);
-    width: 12px;
-}
-
 .lpNativeColorPicker {
     border: 0;
     cursor: pointer;

@@ -9,14 +9,16 @@
             Price
         </span>
         {{/showPrices}}
-        <span class="lpCell">
-            Weight
+        <span class="lpCell lpSummaryWeightHeader">
+            <span>Weight</span>
         </span>
     </li>
     {{#categories}}
         <li class="lpTotalCategory lpRow" id="total_{{id}}" category="{{id}}">
             <span class="lpCell lpLegendCell">
-                <span class="lpLegend" style="background-color: {{displayColor}}"></span>
+                <span class="lpColorPicker">
+                    <span class="lpLegend" style="background-color: {{displayColor}}"></span>
+                </span>
             </span>
             <span class="lpCell">
                 {{name}}
@@ -24,8 +26,8 @@
             {{#showPrices}}<span class="lpCell lpNumber">
                 {{currencySymbol}}{{subtotalPriceDisplay}}
             </span>{{/showPrices}}
-            <span class="lpCell lpNumber">
-                <div class="lpSubtotal"><span class="lpDisplaySubtotal"  mg="{{subtotalWeight}}">{{subtotalWeightDisplay}}</span> <span class="lpSubtotalUnit">{{subtotalUnit}}</span></div>
+            <span class="lpCell lpNumber lpSummaryWeight">
+                <span class="lpDisplaySubtotal" mg="{{subtotalWeight}}">{{subtotalWeightDisplay}}</span><span class="lpSubtotalUnit">{{subtotalUnit}}</span>
             </span>
         </li>
     {{/categories}}
@@ -35,7 +37,7 @@
             Total
         </span>
         {{#showPrices}}<span class="lpCell lpNumber lpSubtotal items">{{currencySymbol}}{{totalPriceDisplay}}</span>{{/showPrices}}
-        <span class="lpCell lpNumber lpSubtotal">
+        <span class="lpCell lpNumber lpSubtotal lpSummaryWeight">
             <span class="lpTotalValue" title="{{totalQty}} items">{{totalWeightDisplay}}</span>
             <span class="lpTotalUnit">{{{totalUnit}}}</span>
         </span>
@@ -49,7 +51,7 @@
             {{#showPrices}}
             <span class="lpCell"></span>
             {{/showPrices}}
-            <span class="lpCell lpNumber lpSubtotal">
+            <span class="lpCell lpNumber lpSubtotal lpSummaryWeight">
                 <span class="lpDisplaySubtotal" mg="{{totalConsumableWeight}}">{{totalConsumableWeightDisplay}}</span>
                 <span class="lpSubtotalUnit">{{subtotalUnit}}</span>
             </span>
@@ -64,7 +66,7 @@
             {{#showPrices}}
             <span class="lpCell"></span>
             {{/showPrices}}
-            <span class="lpCell lpNumber lpSubtotal">
+            <span class="lpCell lpNumber lpSubtotal lpSummaryWeight">
                 <span class="lpDisplaySubtotal" mg="{{totalWornWeight}}">{{totalWornWeightDisplay}}</span>
                 <span class="lpSubtotalUnit">{{subtotalUnit}}</span>
             </span>
@@ -79,7 +81,7 @@
             {{#showPrices}}
             <span class="lpCell"></span>
             {{/showPrices}}
-            <span class="lpCell lpNumber lpSubtotal">
+            <span class="lpCell lpNumber lpSubtotal lpSummaryWeight">
                 <span class="lpDisplaySubtotal" mg="{{totalPackWeight}}">{{totalPackWeightDisplay}}</span>
                 <span class="lpSubtotalUnit">{{subtotalUnit}}</span>
             </span>

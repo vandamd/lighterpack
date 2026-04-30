@@ -97,7 +97,7 @@ async function start() {
     }
 
     logger.info(`Proxying LighterPack API requests to ${liveApiTarget}`);
-    app.use(createLiveApiProxy({ target: liveApiTarget }));
+    app.use(createLiveApiProxy({ target: liveApiTarget, rewriteShareAssets: !isProduction }));
 
     const views = require('./server/views.js');
     app.use('/', views);
