@@ -3,6 +3,7 @@ node_modules
 .DS_Store
 /config/local.json
 /public/dist/*
+/public/index.html
 app.sublime-project
 app.sublime-workspace
 *.code-workspace

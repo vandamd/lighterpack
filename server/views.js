@@ -20,9 +20,9 @@ function renderProductionAssets() {
     const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/dist/.vite/manifest.json'), 'utf8'));
     const entry = manifest['client/lighterpack.ts'];
     const styles = (entry.css || [])
-        .map(file => `<link rel='stylesheet' href='/${file}' />`)
+        .map(file => `<link rel='stylesheet' href='/dist/${file}' />`)
         .join('');
-    const scripts = `<script type='module' src='/${entry.file}'></script>`;
+    const scripts = `<script type='module' src='/dist/${entry.file}'></script>`;
 
     return { scripts, styles };
 }
