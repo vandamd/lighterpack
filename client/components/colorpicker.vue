@@ -1,40 +1,39 @@
 <style lang="scss">
+.lpColorPicker {
+    align-items: center;
+    display: flex;
+    height: 12px;
+    justify-content: center;
+    position: relative;
+    width: 12px;
+}
+
 .lpNativeColorPicker {
     border: 0;
     cursor: pointer;
-    height: 150px;
+    height: 100%;
+    left: 0;
+    opacity: 0;
     padding: 0;
-    width: 150px;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 </style>
 
 <template>
-    <Popover id="lpPickerContainer" :shown="shown" @hide="shown = false">
-        <template #target>
-            <span class="lpLegend" :style="{'background-color': color}" @click="shown = true" />
-        </template>
-        <template #content>
-            <input class="lpNativeColorPicker" type="color" :value="color" @input="onColorChange">
-        </template>
-    </Popover>
+    <span class="lpColorPicker">
+        <span class="lpLegend" :style="{'background-color': color}" />
+        <input ref="colorInput" class="lpNativeColorPicker" type="color" :value="color" @input="onColorChange">
+    </span>
 </template>
 
 <script>
-import Popover from './popover.vue';
-
 export default {
     name: 'ColorPicker',
-    components: {
-        Popover,
-    },
     props: [
         'color',
     ],
-    data() {
-        return {
-            shown: false,
-        };
-    },
     methods: {
         onColorChange(event) {
             this.$emit('colorChange', event.target.value);
