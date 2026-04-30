@@ -1,5 +1,5 @@
 <style lang="scss">
-@import "../css/_globals";
+@use "../css/globals" as *;
 
 .lpUnitSelect {
     border: 1px solid transparent;

@@ -1,4 +1,5 @@
-@import "globals";
+@use "sass:color";
+@use "globals" as *;
 
 .lpSilent {
     background: transparent;
@@ -17,7 +18,7 @@
     }
 
     &.lpSilentError {
-        background-color: lighten(desaturate($red1, 10%), 40%);
+        background-color: color.adjust(color.adjust($red1, $saturation: -10%, $space: hsl), $lightness: 40%, $space: hsl);
         border: 1px solid $red1;
         outline-color: $red1;
 

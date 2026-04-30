@@ -14,7 +14,9 @@ export default {
 
         app.directive('focus-on-create', {
             mounted(el, binding) {
-                if (binding.expression && binding.value || !binding.expression) {
+                const shouldFocus = binding.expression ? binding.value : true;
+
+                if (shouldFocus) {
                     el.focus();
                 }
             },

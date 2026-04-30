@@ -1,4 +1,5 @@
-@import "globals";
+@use "sass:color";
+@use "globals" as *;
 
 .lp {
     &,
@@ -234,7 +235,7 @@
     &:hover:not(:disabled),
     &:active {
         background-position: 0 0;
-        box-shadow: 0 0 1px rgba(255, 255, 255, 0.5) inset, 0 1px 3px darken($orange2, 25%);
+        box-shadow: 0 0 1px rgba(255, 255, 255, 0.5) inset, 0 1px 3px color.adjust($orange2, $lightness: -25%, $space: hsl);
     }
 
     &:focus,
@@ -243,7 +244,7 @@
     }
 
     &:focus:not(:active) {
-        box-shadow: 0 0 0 1px darken($orange2, 15%) inset, 0 1px 3px darken($orange2, 25%);
+        box-shadow: 0 0 0 1px color.adjust($orange2, $lightness: -15%, $space: hsl) inset, 0 1px 3px color.adjust($orange2, $lightness: -25%, $space: hsl);
         outline: none;
     }
 
@@ -328,7 +329,7 @@
 }
 
 .lpSuccess {
-    color: darken($green1, 10%);
+    color: color.adjust($green1, $lightness: -10%, $space: hsl);
 }
 
 .lpWarning {

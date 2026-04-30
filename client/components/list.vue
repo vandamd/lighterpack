@@ -1,5 +1,6 @@
 <style lang="scss">
-@import "../css/_globals";
+@use "sass:color";
+@use "../css/globals" as *;
 
 #listDescriptionContainer {
     margin: 25px 0;
@@ -21,7 +22,7 @@
 }
 
 #getStarted {
-    background: darken($background1, 10%);
+    background: color.adjust($background1, $lightness: -10%, $space: hsl);
     display: flex;
     flex-direction: column;
     height: 220px;

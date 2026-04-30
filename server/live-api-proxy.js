@@ -30,7 +30,7 @@ function shouldProxy(req) {
         return true;
     }
 
-    return appRoutes.indexOf(req.path) === -1;
+    return !appRoutes.includes(req.path);
 }
 
 function rewriteLocalCookie(cookie) {

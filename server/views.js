@@ -5,15 +5,15 @@ const config = require('config');
 
 const router = express.Router();
 
-const vueRoutes = [
-    { path: '/' },
-    { path: '/signin' },
-    { path: '/signin/reset-password' },
-    { path: '/signin/forgot-username' },
-    { path: '/welcome' },
-    { path: '/register' },
-    { path: '/forgot-password' },
-    { path: '/moderation' },
+const appRoutes = [
+    '/',
+    '/signin',
+    '/signin/reset-password',
+    '/signin/forgot-username',
+    '/welcome',
+    '/register',
+    '/forgot-password',
+    '/moderation',
 ];
 
 function renderProductionAssets() {
@@ -50,8 +50,8 @@ async function renderIndex(req) {
     return index;
 }
 
-vueRoutes.forEach((route) => {
-    router.get(route.path, async (req, res, next) => {
+appRoutes.forEach((route) => {
+    router.get(route, async (req, res, next) => {
         try {
             res.send(await renderIndex(req));
         } catch (error) {

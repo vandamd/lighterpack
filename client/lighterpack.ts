@@ -50,27 +50,13 @@ window.Vue = {
 window.bus = createEventBus();
 window.router = router;
 
-bus.$on('unauthorized', () => {
+window.bus.$on('unauthorized', () => {
     window.location.href = '/signin';
 });
 
 const app = createApp({
     components: {
         RouterView,
-    },
-    data() {
-        return {
-            path: '',
-            fatal: '',
-        };
-    },
-    watch: {
-        $route(to) {
-            this.path = to.path;
-        },
-    },
-    mounted() {
-        this.path = router.currentRoute.value.path;
     },
     template: '<router-view />',
 });

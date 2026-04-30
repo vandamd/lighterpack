@@ -1,5 +1,5 @@
 <style lang="scss">
-@import "../css/_globals";
+@use "../css/globals" as *;
 
 $spinnerSize: 18px;
 
