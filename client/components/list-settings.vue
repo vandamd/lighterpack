@@ -14,6 +14,15 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+
+    label {
+        align-items: center;
+        display: flex;
+    }
+
+    input {
+        margin: 0 5px 0 0;
+    }
 }
 
 #lpPriceSettings {
@@ -22,10 +31,6 @@
         margin-left: 10px;
         width: 50px;
     }
-}
-
-#share .lpContent {
-    width: 330px;
 }
 
 #settings .lpContent {
@@ -73,6 +78,11 @@ export default {
     data() {
         return {
             optionalFieldsLookup: [{
+                name: 'listDescription',
+                displayName: 'List descriptions',
+                cssClass: 'lpShowListDescription',
+                value: false,
+            }, {
                 name: 'images',
                 displayName: 'Item images',
                 cssClass: 'lpShowImages',
@@ -91,11 +101,6 @@ export default {
                 name: 'consumable',
                 displayName: 'Consumable items',
                 cssClass: 'lpShowConsumable',
-                value: false,
-            }, {
-                name: 'listDescription',
-                displayName: 'List descriptions',
-                cssClass: 'lpShowListDescription',
                 value: false,
             }],
         };

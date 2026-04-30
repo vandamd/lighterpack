@@ -2,6 +2,10 @@
 #share label {
     font-weight: bold;
 }
+
+.shareFields {
+    width: 330px;
+}
 </style>
 
 <template>
@@ -11,7 +15,7 @@
                 <span><i class="lpSprite lpLink" /> Share</span>
             </template>
             <template #content>
-                <div class="lpFields">
+                <div class="lpFields shareFields">
                     <div class="lpField">
                         <label for="shareUrl">Share your list</label>
                         <input id="shareUrl" v-select-on-bus="'show-share-box'"  v-select-on-focus type="text" :value="shareUrl">
