@@ -127,6 +127,7 @@ function rewriteSharePage(html) {
         '.lpShare .lpShareHeader #lpListName{flex:1 0 auto;font-size:24px;font-weight:600;margin:0;padding:12px 15px;}',
         '.lpShare .lpShareHeader .headerItem{flex:0 0 auto;height:100%;padding:17px 16px;position:relative;}',
         '.lpShare .lpShareThemeMode{flex:0 0 auto;}',
+        '@media only screen and (max-width:720px){.lpChart{display:block;height:auto!important;margin:0 auto;max-width:100%;width:min(100%,260px)!important;}}',
         '.themeModeButton{background:transparent;border:0;color:inherit;cursor:pointer;font:inherit;font-weight:600;padding:0;}',
         '.themeModeButton:hover,.themeModeButton:focus{color:#1b77d3;outline:none;}',
         '</style>',

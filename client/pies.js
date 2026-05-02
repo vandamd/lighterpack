@@ -30,7 +30,7 @@ export default function pies(args) {
         container = args.container;
         container.style.position = 'relative';
         context = container.getContext('2d');
-        setupCanvasScale();
+        bounds = setupCanvasScale();
         if (args.data) {
             srcData = args.data;
             data = preprocess(srcData);
@@ -38,7 +38,6 @@ export default function pies(args) {
             data = args.processedData;
         }
 
-        bounds = { x: context.canvas.clientWidth, y: context.canvas.clientHeight };
         center = { x: bounds.x / 2, y: bounds.y / 2 };
 
         if (center.x < center.y) radius = center.x;
@@ -55,14 +54,16 @@ export default function pies(args) {
 
     function setupCanvasScale() {
         const pixelRatio = window.devicePixelRatio || 1;
-        const width = container.width;
-        const height = container.height;
+        const width = container.clientWidth || container.width;
+        const height = container.clientHeight || container.height;
 
         container.style.width = `${width}px`;
         container.style.height = `${height}px`;
         container.width = Math.round(width * pixelRatio);
         container.height = Math.round(height * pixelRatio);
         context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+        return { x: width, y: height };
     }
 
     function update(args) {
