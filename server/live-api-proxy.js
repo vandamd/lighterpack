@@ -85,6 +85,56 @@ function shouldRewriteSharePage(req, upstreamResponse) {
         && /^text\/html\b/i.test(upstreamResponse.headers['content-type'] || '');
 }
 
+function escapeHtml(value) {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function decodeHtmlEntities(value) {
+    return value
+        .replace(/&#(\d+);/g, (match, code) => String.fromCharCode(Number(code)))
+        .replace(/&#x([0-9a-f]+);/ig, (match, code) => String.fromCharCode(parseInt(code, 16)))
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&apos;/g, "'")
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&');
+}
+
+function titleFromSharePage(html) {
+    const titleMatch = html.match(/<h1\b[^>]*class=["'][^"']*\blpListName\b[^"']*["'][^>]*>([\s\S]*?)<\/h1>/i);
+
+    if (!titleMatch) {
+        return '';
+    }
+
+    return decodeHtmlEntities(titleMatch[1])
+        .replace(/<[^>]+>/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+function rewriteShareTitle(html) {
+    const title = titleFromSharePage(html);
+
+    if (!title) {
+        return html;
+    }
+
+    const titleTag = `<title>${escapeHtml(title)}</title>`;
+
+    if (/<title>[\s\S]*?<\/title>/i.test(html)) {
+        return html.replace(/<title>[\s\S]*?<\/title>/i, titleTag);
+    }
+
+    return html.replace('</head>', `${titleTag}</head>`);
+}
+
 function rewriteSharePage(html) {
     const cacheBust = Date.now();
     const localHeadScripts = `<script type="text/javascript" src="/js/theme.js?v=local-${cacheBust}"></script>`;
@@ -127,13 +177,13 @@ function rewriteSharePage(html) {
         '.lpShare .lpShareHeader #lpListName{flex:1 0 auto;font-size:24px;font-weight:600;margin:0;padding:12px 15px;}',
         '.lpShare .lpShareHeader .headerItem{flex:0 0 auto;height:100%;padding:17px 16px;position:relative;}',
         '.lpShare .lpShareThemeMode{flex:0 0 auto;}',
-        '@media only screen and (max-width:720px){.lpChart{display:block;height:auto!important;margin:0 auto;max-width:100%;width:min(100%,260px)!important;}}',
+        '@media only screen and (max-width:720px){.lpChart{display:block;height:auto!important;margin:0 auto;max-width:100%;width:min(100%,260px)!important;}#lpFooter{align-items:center;flex-direction:column;gap:6px;justify-content:flex-start;text-align:center;}}',
         '.themeModeButton{background:transparent;border:0;color:inherit;cursor:pointer;font:inherit;font-weight:600;padding:0;}',
         '.themeModeButton:hover,.themeModeButton:focus{color:#1b77d3;outline:none;}',
         '</style>',
     ].join('');
 
-    return html
+    return rewriteShareTitle(html)
         .replace(/<script\s+src=['"]\/dist\/share\.[^'"]+\.js['"]><\/script>/, localScripts)
         .replace('</head>', `${localHeadScripts}${localStyles}</head>`);
 }
