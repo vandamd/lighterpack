@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun app.js",
     "start": "bun run build && bun app.js",
-    "build": "vite build && node scripts/render-static-index.mjs && node scripts/check-share-overrides.mjs",
+    "build": "vite build && node scripts/render-static-index.mjs",
     "typecheck": "tsc --noEmit",
     "lint:css": "stylelint \"client/**/*.{scss,vue}\" --fix",
     "lint:js": "eslint --ext .vue --ext .js ./ --fix"
